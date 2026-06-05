@@ -5,10 +5,12 @@ import os
 
 app = FastAPI()
 
+# 環境変数（Renderで設定）
 CHANNEL_ACCESS_TOKEN = os.getenv("CHANNEL_ACCESS_TOKEN")
 
-# データ読み込み（起動時1回）
+# Excel読み込み（起動時1回）
 df = pd.read_excel("bot検討用.xlsx")
+
 
 def reply(reply_token, text):
     url = "https://api.line.me/v2/bot/message/reply"
@@ -22,9 +24,11 @@ def reply(reply_token, text):
     }
     requests.post(url, headers=headers, json=body)
 
+
 @app.get("/")
 def root():
     return {"status": "ok"}
+
 
 @app.post("/callback")
 async def callback(request: Request):
@@ -48,14 +52,13 @@ async def callback(request: Request):
             else:
                 row = result.iloc[0]
 
-                
-reply_text = (
-    f"利用総額は{row['利用総額']}円、\n"
-    f"コース順位は{row['コース数']}人中{row['コース順位']}位、\n"
-    f"全体順位は1240名中{row['全体順位']}位です"
-)
+                reply_text = (
+                    f"利用総額は{row['利用総額']}円、\n"
+                    f"コース順位は{row['コース数']}人中{row['コース順位']}位、\n"
+                    f"全体順位は1240名中{row['全体順位']}位です"
+                )
 
-
+        # ← ここが超重要（インデント）
         reply(event["replyToken"], reply_text)
 
     return "OK"
