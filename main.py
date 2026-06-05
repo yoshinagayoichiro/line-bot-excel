@@ -48,13 +48,13 @@ async def callback(request: Request):
             else:
                 row = result.iloc[0]
 
-                reply_text = (
-                    f"利用総額は{row['利用総額']}円、
-"
-                    f"コース順位は{row['コース数']}人中{row['コース順位']}位、
-"
-                    f"全体順位は1240名中{row['全体順位']}位です"
-                )
+                
+reply_text = (
+    f"利用総額は{row['利用総額']}円、\n"
+    f"コース順位は{row['コース数']}人中{row['コース順位']}位、\n"
+    f"全体順位は1240名中{row['全体順位']}位です"
+)
+
 
         reply(event["replyToken"], reply_text)
 
