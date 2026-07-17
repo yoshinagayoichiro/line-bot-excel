@@ -25,9 +25,15 @@ def reply(reply_token, text):
     requests.post(url, headers=headers, json=body)
 
 
+from fastapi import Response
+
 @app.get("/")
+@app.head("/")
 def root():
-    return {"status": "ok"}
+    return Response(
+        content='{"status":"ok"}',
+        media_type="application/json"
+    )
 
 
 @app.post("/callback")
