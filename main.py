@@ -9,7 +9,8 @@ app = FastAPI()
 CHANNEL_ACCESS_TOKEN = os.getenv("CHANNEL_ACCESS_TOKEN")
 
 # Excel読み込み（起動時1回）
-df = pd.read_excel("bot検討用.xlsx")
+df = pd.read_excel("bot検討用.csv",3
+encoding="utf-8-sig")
 
 
 def reply(reply_token, text):
